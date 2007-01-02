@@ -1,7 +1,4 @@
 
 class User < ActiveRecord::Base
-  acts_as_audited :except => :password
-  
-  def self.current_user
-  end
+  acts_as_activity_logged
 end

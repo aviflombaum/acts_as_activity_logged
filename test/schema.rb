@@ -9,18 +9,15 @@ ActiveRecord::Schema.define(:version => 0) do
     t.column :updated_at, :datetime
   end
   
-  create_table :audits, :force => true do |t|
-    t.column :auditable_id, :integer
-    t.column :auditable_type, :string
+  create_table :activity_logs, :force => true do |t|
     t.column :user_id, :integer
-    t.column :user_type, :string
-    t.column :username, :string
+    t.column :activity_loggable_type, :string
+    t.column :activity_loggable_id, :integer
     t.column :action, :string
-    t.column :changes, :text
     t.column :created_at, :datetime
+    t.column :culprit_id, :integer
+    t.column :culprit_type, :string
+    t.column :referenced_id, :integer
+    t.column :referenced_type, :string
   end
-  
-  add_index :audits, [:auditable_id, :auditable_type], :name => 'auditable_index'
-  add_index :audits, [:user_id, :user_type], :name => 'user_index'
-  add_index :audits, :created_at  
 end
