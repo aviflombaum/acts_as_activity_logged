@@ -102,7 +102,7 @@ module NewBamboo #:nodoc:
           set_culprit
           set_referenced
           
-          if Time.now > self.delay_after_create.since(self.created_at) or action == :create or 
+          if Time.now > self.delay_after_create.since(self.created_at) or action == :create || 
               !defined? self.created_at
             r = self.activity_logs.create :action => action.to_s, 
                                           :referenced => @referenced,
