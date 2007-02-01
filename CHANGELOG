@@ -6,3 +6,6 @@ CHANGELOG
 
 0.2 - 02-01-2007
 * Adjusted test schema and models
+
+0.3 - 01-02-2007
+* Added find_for and latest methods to ActivityLog

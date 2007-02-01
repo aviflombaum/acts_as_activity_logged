@@ -35,6 +35,22 @@ class ActivityLog < ActiveRecord::Base
   rescue
     return "anonymous"  
   end
+  
+  def self.latest(limit=5)
+    self.find(:all, :limit => limit)
+  end
+  
+  # options are :culprit, :referenced, :activity_loggable, :limit
+  def self.find_for(options={})
+    limit = (options.delete(:limit) || 10)
+    culprit_cond = self.send(:santize_sql, ["culprit_id = ?", options[:culprit]]) if options.keys.include? :culprit
+    ref_cond = self.send(:sanitize_sql, ["referenced_id = ?", options[:referenced]]) if options.keys.include? :referenced
+    al_cond = self.send(:santize_sql, ["activity_loggable_id = ?", options[:activity_loggable]]) if options.keys.include? :activity_loggable
+    conditions = []; conditions << culprit_cond << ref_cond << al_cond
+    self.find(:all, :conditions => conditions, :limit => limit)
+  # rescue
+  #   raise "I couldn't run the find with the options you gave me"
+  end
 
 private
   def l_klass
