@@ -50,7 +50,7 @@ class ActivityLog < ActiveRecord::Base
   end
 
 private
-  def decide_conditional(option)
+  def self.decide_conditional(option)
     if option.value.is_a?Array
       "IN"
     else
@@ -58,7 +58,7 @@ private
     end
   end
   
-  def build_sql_conditional_for(options={})
+  def self.build_sql_conditional_for(options={})
     conditions = []
     options.each do |key, value|
       conditional = decide_conditional(option)
