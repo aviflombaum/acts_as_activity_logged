@@ -45,8 +45,8 @@ class ActivityLog < ActiveRecord::Base
     limit = (options.delete(:limit) || 10)
     conditions = build_sql_conditional_for(options)
     self.find(:all, :conditions => conditions, :limit => limit)
-  rescue
-    raise "I couldn't run the find with the options you gave me, sorry"
+  # rescue
+  #   raise "I couldn't run the find with the options you gave me, sorry"
   end
 
 private
