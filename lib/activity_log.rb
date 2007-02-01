@@ -50,19 +50,10 @@ class ActivityLog < ActiveRecord::Base
   end
 
 private
-  def self.decide_conditional(option)
-    if option.is_a?Array
-      "IN"
-    else
-      "="
-    end
-  end
-  
   def self.build_sql_conditional_for(options={})
     conditions = []
     options.each do |key, value|
-      conditional = decide_conditional(value)
-      conditions << self.send(:sanitize_sql, ["#{key.to_s}_id #{conditional} ?", value])
+      conditions << self.send(:sanitize_sql, ["#{key.to_s}_id IN (?)", value])
     end
     return conditions.join(" AND ")
   end
