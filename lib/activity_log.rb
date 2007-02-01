@@ -51,7 +51,7 @@ class ActivityLog < ActiveRecord::Base
 
 private
   def self.decide_conditional(option)
-    if option.value.is_a?Array
+    if option.is_a?Array
       "IN"
     else
       "="
