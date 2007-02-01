@@ -43,7 +43,7 @@ class ActivityLog < ActiveRecord::Base
   # options are :culprit, :referenced, :activity_loggable, :limit
   def self.find_with(options={})
     limit = (options.delete(:limit) || 10)
-    conditions = build_sql_conditional_for(options)
+    conditions = self.build_sql_conditional_for(options)
     self.find(:all, :conditions => conditions, :limit => limit)
   # rescue
   #   raise "I couldn't run the find with the options you gave me, sorry"
