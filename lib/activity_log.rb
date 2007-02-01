@@ -61,8 +61,8 @@ private
   def self.build_sql_conditional_for(options={})
     conditions = []
     options.each do |key, value|
-      conditional = decide_conditional(option)
-      conditions << self.send(:sanitize_sql, ["#{option.key.to_s}_id #{conditional} ?", option.value])
+      conditional = decide_conditional(value)
+      conditions << self.send(:sanitize_sql, ["#{key.to_s}_id #{conditional} ?", value])
     end
     return conditions
   end
