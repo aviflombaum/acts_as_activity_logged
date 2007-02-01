@@ -46,7 +46,7 @@ class ActivityLog < ActiveRecord::Base
     conditions = []
     conditions << self.send(:sanitize_sql, ["culprit_id = ?", options[:culprit]]) if options.keys.include? :culprit
     conditions << self.send(:sanitize_sql, ["referenced_id = ?", options[:referenced]]) if options.keys.include? :referenced
-    conditions << self.send(:santize_sql, ["activity_loggable_id = ?", options[:activity_loggable]]) if options.keys.include? :activity_loggable
+    conditions << self.send(:sanitize_sql, ["activity_loggable_id = ?", options[:activity_loggable]]) if options.keys.include? :activity_loggable
     self.find(:all, :conditions => conditions, :limit => limit)
   # rescue
   #   raise "I couldn't run the find with the options you gave me"
