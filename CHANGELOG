@@ -12,3 +12,6 @@ CHANGELOG
 
 0.3.1 - 01-02-2007
 * Renamed find_for to find_with, the conditions are now stackable
+
+0.3.2 - 01-02-2007
+* Refactored the find_with method, and added IN [2,1,6] capability

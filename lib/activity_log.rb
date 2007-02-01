@@ -43,16 +43,30 @@ class ActivityLog < ActiveRecord::Base
   # options are :culprit, :referenced, :activity_loggable, :limit
   def self.find_with(options={})
     limit = (options.delete(:limit) || 10)
-    conditions = []
-    conditions << self.send(:sanitize_sql, ["culprit_id = ?", options[:culprit]]) if options.keys.include? :culprit
-    conditions << self.send(:sanitize_sql, ["referenced_id = ?", options[:referenced]]) if options.keys.include? :referenced
-    conditions << self.send(:sanitize_sql, ["activity_loggable_id = ?", options[:activity_loggable]]) if options.keys.include? :activity_loggable
-    self.find(:all, :conditions => conditions.join(" AND "), :limit => limit)
+    conditions = build_sql_conditional_for(options)
+    self.find(:all, :conditions => conditions, :limit => limit)
   rescue
     raise "I couldn't run the find with the options you gave me, sorry"
   end
 
 private
+  def decide_conditional(option)
+    if option.value.is_a?Array
+      "IN"
+    else
+      "="
+    end
+  end
+  
+  def build_sql_conditional_for(options={})
+    conditions = []
+    options.each do |key, value|
+      conditional = decide_conditional(option)
+      conditions << self.send(:sanitize_sql, ["#{option.key.to_s}_id #{conditional} ?", option.value])
+    end
+    return conditions
+  end
+
   def l_klass
     Object.const_get(self.activity_loggable_type.to_s)
   end
