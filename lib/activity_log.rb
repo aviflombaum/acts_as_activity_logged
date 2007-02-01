@@ -64,7 +64,7 @@ private
       conditional = decide_conditional(value)
       conditions << self.send(:sanitize_sql, ["#{key.to_s}_id #{conditional} ?", value])
     end
-    return conditions
+    return conditions.join(" AND ")
   end
 
   def l_klass
