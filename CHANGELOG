@@ -9,3 +9,6 @@ CHANGELOG
 
 0.3 - 01-02-2007
 * Added find_for and latest methods to ActivityLog
+
+0.3.1 - 01-02-2007
+* Renamed find_for to find_with, the conditions are now stackable
