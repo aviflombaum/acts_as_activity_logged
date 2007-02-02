@@ -11,7 +11,7 @@ class ActivityLog < ActiveRecord::Base
         "You must set a :method in the options to use this") : 
       the_culprit
   rescue
-    return "anonymous"
+    return nil
   end
   
   alias the_referenced referenced
@@ -22,7 +22,7 @@ class ActivityLog < ActiveRecord::Base
         "You must set a :method in the options to use this") :
         the_referenced
   rescue
-    return "anonymous"  
+    return nil
   end
 
   alias the_activity_loggable activity_loggable
@@ -33,7 +33,7 @@ class ActivityLog < ActiveRecord::Base
         "You must set a :method in the options to use this") :
         the_activity_loggable
   rescue
-    return "anonymous"  
+    return nil
   end
   
   def self.latest(limit=5)
