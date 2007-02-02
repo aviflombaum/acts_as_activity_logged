@@ -51,10 +51,10 @@ class ActivityLog < ActiveRecord::Base
 private
   def self.build_sql_conditional_for(options={})
     conditions = []
+    operator = options.delete(:operator)
     options.each do |key, value|
       conditions << self.send(:sanitize_sql, ["#{key.to_s}_id IN (?)", value])
     end
-    operator = options.delete(:operator)
     return conditions.join(" #{operator || "AND"} ")
   end
 
