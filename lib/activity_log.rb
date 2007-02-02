@@ -54,7 +54,8 @@ private
     options.each do |key, value|
       conditions << self.send(:sanitize_sql, ["#{key.to_s}_id IN (?)", value])
     end
-    return conditions.join(" AND ")
+    operator = options.delete(:operator)
+    return conditions.join(" #{operator || "AND"} ")
   end
 
   def l_klass
