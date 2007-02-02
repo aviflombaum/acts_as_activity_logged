@@ -44,12 +44,12 @@ class ActivityLog < ActiveRecord::Base
   def self.find_with(options={})
     limit = (options.delete(:limit) || 10)
     order = options.delete(:order)
-    if options[:additional]
-      additionals = options[:additional].is_a?Array ? options[:additional] : [options[:additional]]
+    if options.keys.include? :additional
+      additionals = options[:additional].is_a?(Array) ? options[:additional] : [options[:additional]]
     end
     options.delete(:additional)
     conditions = self.build_sql_conditional_for(options)
-    conditions << (conditions ? " AND " : "") << options[:additional].join(" #{operator || "AND"} ") if options[:additional]
+    conditions << (conditions ? " AND " : "") << options[:additional].join(" #{operator || "AND"} ") if additionals
     self.find(:all, :conditions => conditions, :limit => limit, :order => order)
   end
 
