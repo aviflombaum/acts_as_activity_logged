@@ -70,6 +70,9 @@ module NewBamboo #:nodoc:
             self.models = {}
             self.models = options.delete(:models)
             
+            cattr_accessor :skip_save
+            self.skip_save = false
+            
             cattr_accessor :userstamp
             self.userstamp = options.delete(:timestamp)
                         
@@ -99,6 +102,11 @@ module NewBamboo #:nodoc:
         # the log if the time given by :delay_after_create has passed since the object was created. If
         # the object does not have a created_at attribute this switch will be ignored
         def write_activity_log(action = :update)
+          if self.skip_save = true
+            self.skip_save = false
+            return false
+          end
+          
           set_culprit
           set_referenced
           
