@@ -102,7 +102,7 @@ module NewBamboo #:nodoc:
         # the log if the time given by :delay_after_create has passed since the object was created. If
         # the object does not have a created_at attribute this switch will be ignored
         def write_activity_log(action = :update)
-          if self.skip_save = true
+          if self.skip_save == true
             self.skip_save = false
             return false
           end
