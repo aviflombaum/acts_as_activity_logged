@@ -81,9 +81,9 @@ module NewBamboo #:nodoc:
       end
     
       module InstanceMethods
-        private
         attr_accessor :skip_save
         
+        private        
         # Creates a new record in the activity_logs table if applicable
         def activity_log_create
           write_activity_log(:create)
