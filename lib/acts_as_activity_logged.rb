@@ -103,7 +103,7 @@ module NewBamboo #:nodoc:
         def write_activity_log(action = :update)
           if self.skip_save == true
             self.skip_save = false
-            return false
+            return true
           end
           
           set_culprit
