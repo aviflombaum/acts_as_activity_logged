@@ -81,7 +81,7 @@ module NewBamboo #:nodoc:
       end
     
       module InstanceMethods
-        attr_accessor :skip_save
+        attr_accessor :skip_log
         
         private        
         # Creates a new record in the activity_logs table if applicable
@@ -101,19 +101,15 @@ module NewBamboo #:nodoc:
         # the log if the time given by :delay_after_create has passed since the object was created. If
         # the object does not have a created_at attribute this switch will be ignored
         def write_activity_log(action = :update)
-          if @skip_save == true
-            @skip_save = false
-            return true
-          end
-          
           set_culprit
           set_referenced
           
           if self.respond_to?(:created_at) && Time.now > self.delay_after_create.since(self.created_at) or action == :create
             r = self.activity_logs.create :action => action.to_s, 
                                           :referenced => @referenced,
-                                          :culprit => @culprit
+                                          :culprit => @culprit if @skip_log == true
           end
+          @skip_log = false
         end
 
         # If the userstamp option is given, call User.current_user(supplied by the userstamp plugin) 
