@@ -103,11 +103,10 @@ module NewBamboo #:nodoc:
         def write_activity_log(action = :update)
           set_culprit
           set_referenced
-          
           if self.respond_to?(:created_at) && Time.now > self.delay_after_create.since(self.created_at) or action == :create
             r = self.activity_logs.create :action => action.to_s, 
                                           :referenced => @referenced,
-                                          :culprit => @culprit if @skip_log == true
+                                          :culprit => @culprit unless @skip_log == true
           end
           @skip_log = false
         end
