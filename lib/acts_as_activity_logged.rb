@@ -109,6 +109,7 @@ module NewBamboo #:nodoc:
                                           :culprit => @culprit unless @skip_log == true
           end
           @skip_log = false
+          return true
         end
 
         # If the userstamp option is given, call User.current_user(supplied by the userstamp plugin) 
